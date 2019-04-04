@@ -2,16 +2,15 @@ query StopsQuery($name: String) {
   stops(name: $name) {
     name
       stoptimesWithoutPatterns {
-        scheduledArrival
-        realtimeArrival
-        arrivalDelay
+        serviceDay
+        realtime
         scheduledDeparture
         realtimeDeparture
         departureDelay
-        realtime
-        realtimeState
-        serviceDay
-        headsign
+        trip {
+          routeShortName
+          tripHeadsign
+        }
       }
   }
 }
