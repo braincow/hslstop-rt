@@ -1,0 +1,10 @@
+[package]
+name = "hslstop-rt"
+version = "0.1.0"
+authors = ["Antti Peltonen <antti.peltonen@iki.fi>"]
+edition = "2018"
+
+[dependencies]
+serde = ""
+serde_derive = ""
+graphql_client = ""
