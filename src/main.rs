@@ -4,6 +4,8 @@ extern crate serde_derive;
 #[macro_use]
 extern crate graphql_client;
 
+type Long = f64;
+
 // The paths are relative to the directory where your `Cargo.toml` is located.
 // Both json and the GraphQL schema language are supported as sources for the schema
 #[derive(GraphQLQuery)]
