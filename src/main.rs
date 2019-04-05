@@ -26,14 +26,17 @@ fn perform_my_query(variables: stops_query::Variables) -> Result<(), failure::Er
     let request_body = StopsQuery::build_query(variables);
 
     let client = reqwest::Client::new();
-    let mut res = client.post(&env::var("API_URL").unwrap()).json(&request_body).send()?;
+    let mut res = client.post(
+        &env::var("API_URL").unwrap_or(String::from("https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql")))
+        .json(&request_body).send()?;
     let response_body: Response<stops_query::ResponseData> = res.json()?;
     println!("{:#?}", response_body);
     Ok(())
 }
 
-fn main() {
+fn main() -> Result<(), failure::Error> {
     dotenv().ok();
     perform_my_query(stops_query::Variables { name: Some(env::var("STOP_NAME").unwrap()) }).unwrap();
+    Ok(())
 }
 // eof
