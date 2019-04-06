@@ -57,7 +57,7 @@ fn main() -> Result<(), failure::Error> {
                     let utc_datetime = Utc.timestamp(service_day_seconds as i64 + departure_seconds, 0);
                     let departure_datetime = utc_datetime.with_timezone(&Local);
                     table.add_row(row!(
-                        trip.route_short_name.expect("no route short name for trip"),
+                        bFb->trip.route_short_name.expect("no route short name for trip"),
                         trip.trip_headsign.expect("no headsign for trip"),
                         realtime,
                         departure_datetime
