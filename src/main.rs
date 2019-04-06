@@ -21,7 +21,6 @@ type Long = f64;
 #[graphql(
     schema_path = "src/digitransit-hsl-schema.json",
     query_path = "src/digitransit-hsl-queries.graphql",
-    response_derives = "Debug",
 )]
 pub struct StopsQuery;
 
@@ -41,12 +40,10 @@ fn perform_my_query(variables: stops_query::Variables) -> Result<Response<stops_
 fn main() -> Result<(), failure::Error> {
     dotenv().ok();
     let response = perform_my_query(stops_query::Variables { name: Some(env::var("STOP_NAME").unwrap()) }).unwrap();
-    //println!("{:#?}", response);
     let mut table = Table::new();
     for stop in response.data.expect("no response data").stops.expect("no stops in response")
     {
         if let Some(stop) = stop {
-            //println!("{:#?}", stop);
             for time in stop.stoptimes_without_patterns.expect("no stop times in response") {
                 if let Some(time) = time {
                     let service_day_seconds = time.service_day.expect("no service day for stop time");
