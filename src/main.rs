@@ -39,6 +39,8 @@ fn perform_my_query(variables: stops_query::Variables) -> Result<Response<stops_
 fn main() -> Result<(), failure::Error> {
     dotenv().ok();
     let response = perform_my_query(stops_query::Variables { name: Some(env::var("STOP_NAME").unwrap()) }).unwrap();
+    let current_datetime = Local::now();
+    println!("{}", current_datetime.format("%H:%M:%S %d.%m.%Y"));
     let mut table = Table::new();
     // add header row to output and make it pretty with colors
     table.set_titles(row!(
@@ -64,16 +66,15 @@ fn main() -> Result<(), failure::Error> {
                     let utc_datetime = Utc.timestamp(service_day_seconds as i64 + departure_seconds, 0);
                     let departure_datetime = utc_datetime.with_timezone(&Local);
                     let mut departure_string;
-                    let current_datetime = Local::now();
                     let departure_duration = departure_datetime.signed_duration_since(current_datetime);
                     if  departure_duration <= Duration::minutes(
                         env::var("DEPARTURE_ALERT").unwrap_or(String::from("5")).parse::<i64>().unwrap()) {
+                            let mins = departure_duration.num_minutes();
+                            let secs = departure_duration.num_seconds() - (mins * 60);
                             if realtime {
-                                departure_string = format!("in ~{} min {} secs",
-                                    departure_duration.num_minutes(),
-                                    departure_duration.num_seconds());
+                                departure_string = format!("in ~{} min {} secs", mins, secs);
                             } else {
-                                departure_string = format!("in {} min", departure_datetime.signed_duration_since(current_datetime));
+                                departure_string = format!("in {} min {} secs", mins, secs);
                             }
                             // add row to table with highlighting when line is departing inside of DEPARTURE_ALERT
                             table.add_row(row!(
@@ -84,9 +85,9 @@ fn main() -> Result<(), failure::Error> {
                     } else {
                         // add row to table without highligting
                         if realtime {
-                            departure_string = format!("~{}", departure_datetime);
+                            departure_string = format!("~{}", departure_datetime.format("%H:%M"));
                         } else {
-                            departure_string = format!("{}", departure_datetime);
+                            departure_string = format!("{}", departure_datetime.format("%H:%M"));
                         }
                         table.add_row(row!(
                             Fb->trip.route_short_name.expect("no route short name for trip"),
