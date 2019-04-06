@@ -1,0 +1,319 @@
+Response {
+    data: Some(
+        ResponseData {
+            stops: Some(
+                [
+                    Some(
+                        StopsQueryStops {
+                            name: "Majurinpolku",
+                            stoptimes_without_patterns: Some(
+                                [
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                34260
+                                            ),
+                                            realtime_departure: Some(
+                                                34260
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "113"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Tapiola (M)"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                34320
+                                            ),
+                                            realtime_departure: Some(
+                                                34320
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "502"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Merihaka"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                35160
+                                            ),
+                                            realtime_departure: Some(
+                                                35160
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "113"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Tapiola (M)"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                36060
+                                            ),
+                                            realtime_departure: Some(
+                                                36060
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "113"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Tapiola (M)"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                36120
+                                            ),
+                                            realtime_departure: Some(
+                                                36120
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "502"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Merihaka"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    )
+                                ]
+                            )
+                        }
+                    ),
+                    Some(
+                        StopsQueryStops {
+                            name: "Majurinpolku",
+                            stoptimes_without_patterns: Some(
+                                [
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                true
+                                            ),
+                                            scheduled_departure: Some(
+                                                34200
+                                            ),
+                                            realtime_departure: Some(
+                                                34352
+                                            ),
+                                            departure_delay: Some(
+                                                152
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "113"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Leppävaara"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                35100
+                                            ),
+                                            realtime_departure: Some(
+                                                35100
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "113"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Leppävaara"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                true
+                                            ),
+                                            scheduled_departure: Some(
+                                                35100
+                                            ),
+                                            realtime_departure: Some(
+                                                35221
+                                            ),
+                                            departure_delay: Some(
+                                                121
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "502"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Leppävaara"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                36000
+                                            ),
+                                            realtime_departure: Some(
+                                                36000
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "113"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Leppävaara"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    ),
+                                    Some(
+                                        StopsQueryStopsStoptimesWithoutPatterns {
+                                            service_day: Some(
+                                                1554498000.0
+                                            ),
+                                            realtime: Some(
+                                                false
+                                            ),
+                                            scheduled_departure: Some(
+                                                36900
+                                            ),
+                                            realtime_departure: Some(
+                                                36900
+                                            ),
+                                            departure_delay: Some(
+                                                0
+                                            ),
+                                            trip: Some(
+                                                StopsQueryStopsStoptimesWithoutPatternsTrip {
+                                                    route_short_name: Some(
+                                                        "502"
+                                                    ),
+                                                    trip_headsign: Some(
+                                                        "Leppävaara"
+                                                    )
+                                                }
+                                            )
+                                        }
+                                    )
+                                ]
+                            )
+                        }
+                    )
+                ]
+            )
+        }
+    ),
+    errors: None
+}
