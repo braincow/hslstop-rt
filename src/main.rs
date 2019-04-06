@@ -38,7 +38,7 @@ fn perform_my_query(variables: stops_query::Variables) -> Result<Response<stops_
 
 fn main() -> Result<(), failure::Error> {
     dotenv().ok();
-    let stop_name = env::var("STOP_NAME").unwrap();
+    let stop_name = env::var("STOP_NAME").expect("STOP_NAME environment variable is missing. Consult README");
     let response = perform_my_query(stops_query::Variables { name: Some(stop_name.clone()) }).unwrap();
     let current_datetime = Local::now();
     println!("{} // {}", current_datetime.format("%H:%M:%S %d.%m.%Y"), stop_name);
