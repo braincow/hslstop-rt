@@ -40,10 +40,10 @@ fn main() -> Result<(), failure::Error> {
     dotenv().ok();
     let response = perform_my_query(stops_query::Variables { name: Some(env::var("STOP_NAME").unwrap()) }).unwrap();
     let mut table = Table::new();
-    table.add_row(row!(
+    // add header row to output and make it pretty with colors
+    table.set_titles(row!(
         BbFw->String::from("line"),
         BbFw->String::from("destination"),
-        BbFw->String::from("~/*"),
         BbFw->String::from("departure time"),
     ));
     for stop in response.data.expect("no response data").stops.expect("no stops in response")
@@ -51,39 +51,60 @@ fn main() -> Result<(), failure::Error> {
         if let Some(stop) = stop {
             for time in stop.stoptimes_without_patterns.expect("no stop times in response") {
                 if let Some(time) = time {
+                    // parse information about stop, departure and departing trip
                     let service_day_seconds = time.service_day.expect("no service day for stop time");
                     let trip = time.trip.expect("no trip info for stop time");
                     let realtime = time.realtime.expect("no realtime flag for stop time");
                     let departure_seconds;
-                    if realtime == true {
+                    if realtime {
                         departure_seconds = time.realtime_departure.expect("no realtime timestamp in stop time");
                     } else {
                         departure_seconds = time.scheduled_departure.expect("no scheduled timestamp in stop time");
                     }
                     let utc_datetime = Utc.timestamp(service_day_seconds as i64 + departure_seconds, 0);
                     let departure_datetime = utc_datetime.with_timezone(&Local);
+                    let mut departure_string;
                     let current_datetime = Local::now();
-                    if departure_datetime.signed_duration_since(current_datetime) <= Duration::minutes(
+                    let departure_duration = departure_datetime.signed_duration_since(current_datetime);
+                    if  departure_duration <= Duration::minutes(
                         env::var("DEPARTURE_ALERT").unwrap_or(String::from("5")).parse::<i64>().unwrap()) {
-                        table.add_row(row!(
-                            bFb->trip.route_short_name.expect("no route short name for trip"),
-                            bF->trip.trip_headsign.expect("no headsign for trip"),
-                            bF->realtime,
-                            bF->departure_datetime
-                        ));
+                            if realtime {
+                                departure_string = format!("in ~{} min {} secs",
+                                    departure_duration.num_minutes(),
+                                    departure_duration.num_seconds());
+                            } else {
+                                departure_string = format!("in {} min", departure_datetime.signed_duration_since(current_datetime));
+                            }
+                            // add row to table with highlighting when line is departing inside of DEPARTURE_ALERT
+                            table.add_row(row!(
+                                bFb->trip.route_short_name.expect("no route short name for trip"),
+                                bF->trip.trip_headsign.expect("no headsign for trip"),
+                                bF->departure_string
+                            ));
                     } else {
+                        // add row to table without highligting
+                        if realtime {
+                            departure_string = format!("~{}", departure_datetime);
+                        } else {
+                            departure_string = format!("{}", departure_datetime);
+                        }
                         table.add_row(row!(
                             Fb->trip.route_short_name.expect("no route short name for trip"),
                             trip.trip_headsign.expect("no headsign for trip"),
-                            realtime,
-                            departure_datetime
+                            departure_string
                         ));
                     }
                 }
             }
         }
+        // add devider between stops if multiple
+        table.add_empty_row();
     }
+    // remove last row which is always on empty row
+    table.remove_row(table.len() - 1);
+    // print table out
     table.printstd();
+    // return to shell with empty Ok
     Ok(())
 }
 // eof
