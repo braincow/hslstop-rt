@@ -25,7 +25,6 @@ type Long = f64;
 pub struct StopsQuery;
 
 fn perform_my_query(variables: stops_query::Variables) -> Result<Response<stops_query::ResponseData>, failure::Error> {
-
     // this is the important line
     let request_body = StopsQuery::build_query(variables);
 
