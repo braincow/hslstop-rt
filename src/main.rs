@@ -10,7 +10,7 @@ use dotenv::dotenv;
 use std::env;
 use graphql_client::{GraphQLQuery, Response};
 use prettytable::Table;
-use chrono::{TimeZone, Utc, Local};
+use chrono::{TimeZone, Utc, Local, Duration};
 
 // schema contains scalar Long that Rust language has no analog for so we map it to f64
 type Long = f64;
@@ -40,6 +40,12 @@ fn main() -> Result<(), failure::Error> {
     dotenv().ok();
     let response = perform_my_query(stops_query::Variables { name: Some(env::var("STOP_NAME").unwrap()) }).unwrap();
     let mut table = Table::new();
+    table.add_row(row!(
+        BbFw->String::from("line"),
+        BbFw->String::from("destination"),
+        BbFw->String::from("~/*"),
+        BbFw->String::from("departure time"),
+    ));
     for stop in response.data.expect("no response data").stops.expect("no stops in response")
     {
         if let Some(stop) = stop {
@@ -56,12 +62,23 @@ fn main() -> Result<(), failure::Error> {
                     }
                     let utc_datetime = Utc.timestamp(service_day_seconds as i64 + departure_seconds, 0);
                     let departure_datetime = utc_datetime.with_timezone(&Local);
-                    table.add_row(row!(
-                        bFb->trip.route_short_name.expect("no route short name for trip"),
-                        trip.trip_headsign.expect("no headsign for trip"),
-                        realtime,
-                        departure_datetime
-                    ));
+                    let current_datetime = Local::now();
+                    if departure_datetime.signed_duration_since(current_datetime) <= Duration::minutes(
+                        env::var("DEPARTURE_ALERT").unwrap_or(String::from("5")).parse::<i64>().unwrap()) {
+                        table.add_row(row!(
+                            bFb->trip.route_short_name.expect("no route short name for trip"),
+                            bF->trip.trip_headsign.expect("no headsign for trip"),
+                            bF->realtime,
+                            bF->departure_datetime
+                        ));
+                    } else {
+                        table.add_row(row!(
+                            Fb->trip.route_short_name.expect("no route short name for trip"),
+                            trip.trip_headsign.expect("no headsign for trip"),
+                            realtime,
+                            departure_datetime
+                        ));
+                    }
                 }
             }
         }
