@@ -10,4 +10,4 @@ Default values for configurable variables can be set either via .env file or by 
 * API_URL, http address for the Digitraffic GraphQL endpoint
 * DEPARTURE_ALERT, value in minutes inside of which prior to departure the formatting changes in output to make it visible (aka highlighted)
 
-To run execute ```cargo run``` in the root dir.
+To run execute ```cargo run``` in the root dir. The easiest way to change stop is to execute cargo with environment parameters ```STOP_NAME=Rautatieasema DEPARTURE_ALERT=10 cargo run```.
