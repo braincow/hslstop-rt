@@ -38,9 +38,10 @@ fn perform_my_query(variables: stops_query::Variables) -> Result<Response<stops_
 
 fn main() -> Result<(), failure::Error> {
     dotenv().ok();
-    let response = perform_my_query(stops_query::Variables { name: Some(env::var("STOP_NAME").unwrap()) }).unwrap();
+    let stop_name = env::var("STOP_NAME").unwrap();
+    let response = perform_my_query(stops_query::Variables { name: Some(stop_name.clone()) }).unwrap();
     let current_datetime = Local::now();
-    println!("{}", current_datetime.format("%H:%M:%S %d.%m.%Y"));
+    println!("{} // {}", current_datetime.format("%H:%M:%S %d.%m.%Y"), stop_name);
     let mut table = Table::new();
     // add header row to output and make it pretty with colors
     table.set_titles(row!(
@@ -71,10 +72,19 @@ fn main() -> Result<(), failure::Error> {
                         env::var("DEPARTURE_ALERT").unwrap_or(String::from("5")).parse::<i64>().unwrap()) {
                             let mins = departure_duration.num_minutes();
                             let secs = departure_duration.num_seconds() - (mins * 60);
-                            if realtime {
-                                departure_string = format!("in ~{} min {} secs", mins, secs);
+                            // perform formatting of information based on few values
+                            if mins > 0 {
+                                if realtime {
+                                    departure_string = format!("in ~{} min {} secs", mins, secs);
+                                } else {
+                                    departure_string = format!("in {} min {} secs", mins, secs);
+                                }
                             } else {
-                                departure_string = format!("in {} min {} secs", mins, secs);
+                                if realtime {
+                                    departure_string = format!("in ~{} secs", secs);
+                                } else {
+                                    departure_string = format!("in {} secs", secs);
+                                }
                             }
                             // add row to table with highlighting when line is departing inside of DEPARTURE_ALERT
                             table.add_row(row!(
