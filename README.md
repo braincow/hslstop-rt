@@ -2,7 +2,7 @@
 
 ![screenshot](hslstop-rt.png)
 
-GraphQL test against Digitraffic API as a functional example on Rust language. This application prints out a nice table in ASCII of departing lines (or trips in GraphQL query) for specified stop. Output also tries to emulate the HSL info screen in its color scheme.
+GraphQL test against [Digitransit API](https://www.digitransit.fi/en/developers/) as a functional example on Rust language. This application prints out a nice table in ASCII of departing lines (or trips in GraphQL query) for specified stop. Output also tries to emulate the [HSL](https://www.hsl.fi/en) info screen in its color scheme.
 
 Default values for configurable variables can be set either via .env file or by setting environment variables. Latter takes precedence if both are specified. Configurable values are:
 
