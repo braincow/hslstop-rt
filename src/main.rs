@@ -6,8 +6,9 @@ extern crate dotenv;
 extern crate prettytable;
 extern crate chrono;
 
-use dotenv::dotenv;
 use std::env;
+use std::cmp::Ordering;
+use dotenv::dotenv;
 use graphql_client::{GraphQLQuery, Response};
 use prettytable::Table;
 use chrono::{TimeZone, Utc, Local, Duration};
@@ -66,8 +67,21 @@ fn main() -> Result<(), failure::Error> {
                     }
                     let utc_datetime = Utc.timestamp(service_day_seconds as i64 + departure_seconds, 0);
                     let departure_datetime = utc_datetime.with_timezone(&Local);
-                    let mut departure_string;
                     let departure_duration = departure_datetime.signed_duration_since(current_datetime);
+                    let departure_delay = time.departure_delay.expect("departure delay missing from time object");
+                    let departure_delay_text: String;
+                    match departure_delay.cmp(&0) {
+                        Ordering::Equal => {
+                            departure_delay_text = String::from("");
+                        },
+                        Ordering::Greater => {
+                            departure_delay_text = format!("(+{})", departure_delay);
+                        },
+                        Ordering::Less => {
+                            departure_delay_text = format!("({})", departure_delay);
+                        }
+                    }
+                    let mut departure_string;
                     if  departure_duration <= Duration::minutes(
                         env::var("DEPARTURE_ALERT").unwrap_or(String::from("5")).parse::<i64>().unwrap()) {
                             let mins = departure_duration.num_minutes();
@@ -75,13 +89,13 @@ fn main() -> Result<(), failure::Error> {
                             // perform formatting of information based on few values
                             if mins > 0 {
                                 if realtime {
-                                    departure_string = format!("in ~{} min {} secs", mins, secs);
+                                    departure_string = format!("in ~{} min {} secs {}", mins, secs, departure_delay_text);
                                 } else {
                                     departure_string = format!("in {} min {} secs", mins, secs);
                                 }
                             } else {
                                 if realtime {
-                                    departure_string = format!("in ~{} secs", secs);
+                                    departure_string = format!("in ~{} secs {}", secs, departure_delay_text);
                                 } else {
                                     departure_string = format!("in {} secs", secs);
                                 }
@@ -95,7 +109,7 @@ fn main() -> Result<(), failure::Error> {
                     } else {
                         // add row to table without highligting
                         if realtime {
-                            departure_string = format!("~{}", departure_datetime.format("%H:%M"));
+                            departure_string = format!("~{} ({})", departure_datetime.format("%H:%M"), departure_delay);
                         } else {
                             departure_string = format!("{}", departure_datetime.format("%H:%M"));
                         }
