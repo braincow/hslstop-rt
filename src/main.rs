@@ -9,7 +9,7 @@ extern crate chrono;
 use dotenv::dotenv;
 use std::env;
 use graphql_client::{GraphQLQuery, Response};
-use prettytable::Table;
+use prettytable::{format, Table};
 use chrono::{TimeZone, Utc, Local, Duration};
 
 // schema contains scalar Long that Rust language has no analog for so we map it to f64
@@ -43,6 +43,7 @@ fn main() -> Result<(), failure::Error> {
     let current_datetime = Local::now();
     println!("{} // {}", current_datetime.format("%H:%M:%S %d.%m.%Y"), stop_name);
     let mut table = Table::new();
+    table.set_format(*format::consts::FORMAT_NO_BORDER_LINE_SEPARATOR);
     // add header row to output and make it pretty with colors
     table.set_titles(row!(
         BbFw->String::from("line"),
