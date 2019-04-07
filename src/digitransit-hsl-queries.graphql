@@ -6,7 +6,6 @@ query StopsQuery($name: String) {
         realtime
         scheduledDeparture
         realtimeDeparture
-        departureDelay
         trip {
           routeShortName
           tripHeadsign
