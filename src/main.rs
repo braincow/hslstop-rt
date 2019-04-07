@@ -110,7 +110,8 @@ fn main() -> Result<(), failure::Error> {
             }
         }
         // add devider between stops if multiple
-        table.add_empty_row();
+        let divider = table.add_row(row!(""));
+        divider.get_mut_cell(0).unwrap().set_hspan(3);
     }
     // remove last row which is always on empty row
     table.remove_row(table.len() - 1);
