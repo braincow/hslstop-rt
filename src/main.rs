@@ -118,6 +118,8 @@ fn main() -> Result<(), failure::Error> {
         table.remove_row(table.len() - 1);
         // print table out
         table.printstd();
+    } else {
+        println!("No stops found.");
     }
     // return to shell with empty Ok
     Ok(())
