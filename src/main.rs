@@ -113,10 +113,12 @@ fn main() -> Result<(), failure::Error> {
         let divider = table.add_row(row!(""));
         divider.get_mut_cell(0).unwrap().set_hspan(3);
     }
-    // remove last row which is always on empty row
-    table.remove_row(table.len() - 1);
-    // print table out
-    table.printstd();
+    if table.len() > 0 {
+        // remove last row which is always empty (if there were stops found)
+        table.remove_row(table.len() - 1);
+        // print table out
+        table.printstd();
+    }
     // return to shell with empty Ok
     Ok(())
 }
